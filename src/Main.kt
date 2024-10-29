@@ -1,14 +1,31 @@
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 fun main() {
-    val name = "Kotlin"
-    //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-    // to see how IntelliJ IDEA suggests fixing it.
-    println("Hello, " + name + "!")
+    println("Enter two numbers and an operation (for example, 3 4 +):")
+    val input = readlnOrNull() ?: return
+    val parts = input.split(" ")
 
-    for (i in 1..5) {
-        //TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint
-        // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
-        println("i = $i")
+    if (parts.size != 3) {
+        println("uncorrected input!")
+        return
+    }
+
+    try {
+        val num1 = parts[0].toDouble()
+        val num2 = parts[1].toDouble()
+        val operation = parts[2]
+
+        val result = when (operation) {
+            "+" -> num1 + num2
+            "-" -> num1 - num2
+            "*" -> num1 * num2
+            "/" -> {
+                if (num2 != 0.0) num1 / num2
+                else throw ArithmeticException("division by zero")
+            }
+            else -> throw IllegalArgumentException("uncorrected operation!")
+        }
+
+        println("Результат: $result")
+    } catch (e: Exception) {
+        println("Ошибка: ${e.message}")
     }
 }
